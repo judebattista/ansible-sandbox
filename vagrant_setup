@@ -1,0 +1,94 @@
+vagrant up
+vagrant ssh-config
+Host host1
+	HostName 127.0.0.1
+	User vagrant
+	Port 2222
+	UserKnownHostsFile /dev/null
+	StrictHostKeyChecking no
+	PasswordAuthentication no
+	IdentityFile /Users/ioannis/Desktop/blog/ansible_intro/.vagrant/machines/host1/virtualbox/private_key
+	IdentitiesOnly yes
+	LogLevel FATAL
+
+Host host2
+	HostName 127.0.0.1
+	User vagrant
+	Port 2200
+	UserKnownHostsFile /dev/null
+	StrictHostKeyChecking no
+	PasswordAuthentication no
+	IdentityFile /Users/ioannis/Desktop/blog/ansible_intro/.vagrant/machines/host2/virtualbox/private_key
+	IdentitiesOnly yes
+	LogLevel FATAL
+
+
+
+1) One-time setup
+On Windows (host):
+	Make sure you’re on Windows Pro and enable Hyper-V (Control Panel → Turn Windows features on/off → Hyper-V).
+
+	Open Windows Terminal as Administrator whenever you’ll run vagrant up with the Hyper-V provider (Hyper-V needs elevation).
+
+# Update and basics
+sudo apt update
+sudo apt install -y curl unzip ca-certificates build-essential
+
+# Install Vagrant (HashiCorp’s repo gives you a current version)
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp.gpg
+echo "deb [signed-by=/usr/share/keyrings/hashicorp.gpg] https://apt.releases.hashicorp.com kali main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+sudo apt update && sudo apt install -y vagrant
+
+# Ansible (use a venv if you like)
+sudo apt install -y python3-venv python3-pip
+python3 -m venv ~/.venvs/ans
+source ~/.venvs/ans/bin/activate
+pip install --upgrade pip
+pip install ansible
+
+Make Vagrant see Windows tools & paths:
+Add this to your WSL shell rc (e.g., ~/.zshrc or ~/.bashrc):
+	export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS="1"
+
+2) See Vagrantfile for setup using public_network and bridge: "Default Switch"
+	Can use a custom Hyper-V switch and static IPs
+
+3) Bring it up and capture SSH config
+From an elevated Windows Terminal (so Hyper-V is happy), open your WSL Kali tab and run:
+	cd /mnt/c/dev/ansible-lab
+	vagrant up --provider=hyperv
+	vagrant ssh-config > ssh.cfg
+
+4) Simple Ansible inventory that reuses ssh.cfg
+Create hosts.ini:
+	[web]
+	web ansible_host=web
+
+	[db]
+	db ansible_host=db
+
+	[all:vars]
+	ansible_user=vagrant
+	ansible_ssh_common_args='-F ./ssh.cfg'
+
+Why this works: Vagrant creates SSH “Host” entries named after each machine (web, db) in ssh.cfg. Ansible will consult that file for the actual hostname/IP, port, and key.
+
+Test it:
+	source ~/.venvs/ansble/bin/activate
+	ansible all -i hosts.ini -m ping
+
+5) Run your playbook
+Assuming your playbook is site.yml and targets both hosts:
+	ansible-playbook -i hosts.ini site.yml
+
+Variations & tips
+
+Want more nodes? Add names to the %w[web db] list (e.g., web db app1 app2).
+
+Need Ubuntu 24.04/Kali/Debian? Swap config.vm.box to another Hyper-V capable box (e.g., generic/ubuntu2404, generic/debian12).
+
+Windows targets: Use Windows Server Hyper-V images and WinRM in your inventory; I can template that if needed.
+
+Molecule + Docker (even faster): For role-level tests, Molecule on WSL2 (with Docker Desktop) is blazing fast. Use VMs when you require a “real” kernel/OS or systemd nuances.
+
+
