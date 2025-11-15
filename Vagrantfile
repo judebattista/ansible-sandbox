@@ -21,7 +21,7 @@ Vagrant.configure("2") do |config|
       node.vm.hostname = "lab-#{name}"
 
       # Attach to our custom Hyper-V switch via public network
-      node.vm.netowrk "public network", bride: "ansibleSandbox", mac: "auto"
+      node.vm.network "public_network", bride: "ansibleSandbox", mac: "auto"
 
       # Set up VM params
       node.vm.provider "hyperv" do |hv|
@@ -29,12 +29,15 @@ Vagrant.configure("2") do |config|
         hv.cpus = 2
         hv.vmname = "lab-#{name}"
       end
-  # Because we want to use Ansible, let's make sure Python is installed
-  node.vm.provision "shell", inline: <<-SHELL
-    sudo apt-get update -y
-    sudo apt-get install -y python3 python3-apt
-  SHELL
-  
+    
+      # Because we want to use Ansible, let's make sure Python is installed
+      node.vm.provision "shell", inline: <<-SHELL
+        sudo apt-get update -y
+        sudo apt-get install -y python3 python3-apt
+      SHELL
+ 
+    end
+
   end
 
 end

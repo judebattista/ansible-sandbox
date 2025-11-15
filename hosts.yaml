@@ -1,0 +1,16 @@
+﻿vagrants:
+  hosts:
+    vagrant0:
+      ansible_host: 192.168.50.174 
+      ansible_user: vagrant 
+      ansible_password: vagrant
+      ansible_port: 22 
+      ansible_ssh_private_key_file: /mnt/c/Users/jude/.vagrant.d/insecure_private_keys/vagrant.key.ed25519
+    vagrant1:
+      ansible_host: 192.168.50.175
+      ansible_user: vagrant 
+      ansible_password: vagrant
+      ansible_port: 22
+      ansible_ssh_private_key_file: /mnt/c/Users/jude/.vagrant.d/insecure_private_keys/vagrant.key.ed25519
+
+
