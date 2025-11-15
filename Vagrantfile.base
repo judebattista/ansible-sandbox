@@ -7,8 +7,7 @@ Vagrant.configure("2") do |config|
     hv.vm_integration_services = {
       guest_service_interface: true
     }
-    # Use the built-in NATed "Default Switch"
-    hv.ip_address_timeout = 300
+    hv.ip_address_timeout = 60
   end
 
   # Common SSH settings so Ansible can use vagrant's ssh-config
@@ -19,12 +18,15 @@ Vagrant.configure("2") do |config|
   config.vm.synced_folder ".", "/vagrant", disabled: true
 
   # Define two VMs
-  %w[web db].each do |name|
+  %w[vagrant0 vagrant1].each do |name|
     config.vm.define name do |node|
       node.vm.hostname = "lab-#{name}"
 
       # Attach to Default Switch via "public_network"
-      node.vm.network "public_network", bridge: "Default Switch", mac: "auto"
+      # node.vm.network "public_network", bridge: "ansible_sandbox_switch", mac: "auto"
+
+	  # Attach to Custom Switch via "public_network"
+      node.vm.network "public_network", bridge: "ansible_sandbox_switch", mac: "auto"
 
       # Small memory footprint; adjust as needed
       node.vm.provider "hyperv" do |hv|
