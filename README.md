@@ -11,9 +11,9 @@ On Windows (host):
 ## Install Vagrant (HashiCorp’s repo gives you a current version)
 1. Use a package manager: sudo apt install vagrant
 2. Install manually: 
-  1. curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp.gpg
-  2. echo "deb [signed-by=/usr/share/keyrings/hashicorp.gpg] https://apt.releases.hashicorp.com kali main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-  3. update && sudo apt install -y vagrant
+  	1. curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp.gpg
+  	2. echo "deb [signed-by=/usr/share/keyrings/hashicorp.gpg] https://apt.releases.hashicorp.com kali main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+  	3. update && sudo apt install -y vagrant
 
 ## Ansible (use a venv if you like)
 1. sudo apt install -y python3-venv python3-pip
@@ -37,10 +37,10 @@ Add this to your WSL shell environment (e.g. ~/.bashrc): `export VAGRANT\_WSL\_E
 
 ## Set up Ansible hosts file
 1. Bring up Vagrant and capture SSH config
-  1. Open an elevated Windows Terminal to keep Hyper-V happy, then open your WSL tab
-  2. cd to your repo in the Windows file systel: `cd /mnt/c/dev/ansible-lab`
-  3. Start vagrant with: `vagrant up --provider=hyperv`
-  4. Get the ssh info: `vagrant ssh-config > ssh.cfg`
+  	1. Open an elevated Windows Terminal to keep Hyper-V happy, then open your WSL tab
+  	2. cd to your repo in the Windows file systel: `cd /mnt/c/dev/ansible-lab`
+  	3. Start vagrant with: `vagrant up --provider=hyperv`
+  	4. Get the ssh info: `vagrant ssh-config > ssh.cfg`
 
 4) Simple Ansible inventory that reuses ssh.cfg
 Create hosts.ini:
