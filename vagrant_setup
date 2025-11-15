@@ -92,3 +92,10 @@ Windows targets: Use Windows Server Hyper-V images and WinRM in your inventory; 
 Molecule + Docker (even faster): For role-level tests, Molecule on WSL2 (with Docker Desktop) is blazing fast. Use VMs when you require a “real” kernel/OS or systemd nuances.
 
 
+Problems:
+	Yeah,can't run Vagrant this way in WSL. Instead, install in Windows
+
+	Need a new virtual switch in Hyper-V
+		External network
+		Use your primary ethernet/wi-fi adapter
+		Check "allow management operating system to share this network adapter"
