@@ -35,12 +35,15 @@ Note: Open Windows Terminal as Administrator whenever you will run `vagrant up` 
 
 ## WSL: Allow Vagrant to see Windows tools & paths:
 Add this to your WSL shell environment (e.g. ~/.bashrc): `export VAGRANT\_WSL\_ENABLE\_WINDOWS\_ACCESS="1"`
+
 This will allow us to use WSL to issue commands to Vagrant even though the VMs will be running under windows.
+
 If you would prefer to control your VMs through Powershell, you can omit this step.
 
 # Per-project set up
 ## If you want to work with this repo as your base, clone the repo to your **Windows** file system.
 For continuity in this documentation, we will assume it is installed to C:/dev/ansible-sandbox
+
 Using WSL:
 1. `cd /mnt/c/dev/ansible-sandbox`
 2. `git@github.com:judebattista/ansible-sandbox.git`
@@ -53,21 +56,17 @@ Alternatively you can clone the repo from Powershell:
 This repo contains a sample Vagrant file that stands up two Ubunta 22.04 boxes
 It uses the Hyper-V provider and the ansibleSandbox bridge we created during the Windows config
 If you named your Hyper-V virtual switch something other than "ansibleSandbox" you will need to esit the Vagrantfile (line 24 as of this version).
-
 ## Set up Ansible hosts file
 1. Bring up Vagrant and capture SSH config
 	1. Open an elevated Windows Terminal to keep Hyper-V happy, then open your WSL tab
 	2. cd to your repo in the Windows file system: `cd /mnt/c/dev/ansible-sandbox`
 	3. Start vagrant with: `vagrant up --provider=hyperv`
 	4. Get the ssh info: `vagrant ssh-config > ssh.cfg`
-
 2. Create hosts.ini or hosts.yaml using the info now captured in ssh.cfg
 This repo contains a hosts.yaml file designed to work with the local Vagrantfile
-
 3. Test it your set up:
 	`source ~/.venvs/ansble/bin/activate
 	ansible all -i hosts.ini -m ping`
-
 4. Run your playbook
 Assuming your playbook is site.yml and targets both hosts:
 	`ansible-playbook -i hosts.ini site.yml`
