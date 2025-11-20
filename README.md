@@ -15,7 +15,7 @@ We have to jump through a few hoops to avoid nested virtualization issues: even 
 
 Note: Open Windows Terminal as Administrator whenever you will run `vagrant up` with the Hyper-V provider. Hyper-V requires elevated privileges to run correctly.
 
-## WSL Update and install basic dependencies on WSL
+## WSL: Update and install basic dependencies on WSL
 1. sudo apt update
 2. sudo apt install -y curl unzip ca-certificates build-essential
 
@@ -49,7 +49,6 @@ Alternatively you can clone the repo from Powershell:
 1. `cd c:/dev/ansible-sandbox`
 2. `git clone git@github.com:judebattista/ansible-sandbox.git`
 
-
 ## Set up Vagrantfile
 This repo contains a sample Vagrant file that stands up two Ubunta 22.04 boxes
 It uses the Hyper-V provider and the ansibleSandbox bridge we created during the Windows config
@@ -62,12 +61,13 @@ If you named your Hyper-V virtual switch something other than "ansibleSandbox" y
 	3. Start vagrant with: `vagrant up --provider=hyperv`
 	4. Get the ssh info: `vagrant ssh-config > ssh.cfg`
 
-2. Simple Ansible inventory that reuses ssh.cfg
-Create hosts.ini or hosts.yaml. This repo contains a hosts.yaml file designed to work with the local Vagrantfile
-Test it:
+2. Create hosts.ini or hosts.yaml using the info now captured in ssh.cfg
+This repo contains a hosts.yaml file designed to work with the local Vagrantfile
+
+3. Test it your set up:
 	`source ~/.venvs/ansble/bin/activate
 	ansible all -i hosts.ini -m ping`
 
-3. Run your playbook
+4. Run your playbook
 Assuming your playbook is site.yml and targets both hosts:
 	`ansible-playbook -i hosts.ini site.yml`
