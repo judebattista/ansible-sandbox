@@ -14,7 +14,7 @@ For more information you can use:
 
 `wsl --version`
 
-For this guide, I used WSL 2 running on Windows 11, hosting both Kali and Ubuntu distributions. If you need to install WSL, [this article](https://learn.microsoft.com/en-us/windows/wsl/install target="_blank") from Microsoft is helpful.
+For this guide, I used WSL 2 running on Windows 11, hosting both Kali and Ubuntu distributions. If you need to install WSL, [this article](https://learn.microsoft.com/en-us/windows/wsl/install) from Microsoft is helpful.
 
 # One-time setup
 ## Windows (host) config:
@@ -33,7 +33,7 @@ Note: Open Windows Terminal as Administrator whenever you will run `vagrant up` 
 
 ## WSL: Install Vagrant (HashiCorp’s repo gives you a current version)
 1. Use your chosen distro's package manager. I used apt: `sudo apt install vagrant`
-2. Install manually using the instructions at [Hashicorp's site](https://developer.hashicorp.com/vagrant/install target="_blank")
+2. Install manually using the instructions at [Hashicorp's site](https://developer.hashicorp.com/vagrant/install)
 
 ## WSL: Install Ansible. This example uses venv, but you can use whatever environment manager you choose.
 1. sudo apt install -y python3-venv python3-pip
