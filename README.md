@@ -13,7 +13,7 @@ We have to jump through a few hoops to avoid nested virtualization issues: even 
 	3. Check "allow management operating system to share this network adapter"
 	4. For compatibility with this repo, name the switch "ansibleSandbox". You can use any name you wish, but you'll need to edit the Vagrantfile later.
 
-Note: Open Windows Terminal as Administrator whenever you’ll run `vagrant up` with the Hyper-V provider as Hyper-V needs elevation.
+Note: Open Windows Terminal as Administrator whenever you will run `vagrant up` with the Hyper-V provider. Hyper-V requires elevated privileges to run correctly.
 
 ## WSL Update and install basic dependencies on WSL
 1. sudo apt update
@@ -41,6 +41,14 @@ If you would prefer to control your VMs through Powershell, you can omit this st
 # Per-project set up
 ## If you want to work with this repo as your base, clone the repo to your **Windows** file system.
 For continuity in this documentation, we will assume it is installed to C:/dev/ansible-sandbox
+Using WSL:
+1. `cd /mnt/c/dev/ansible-sandbox`
+2. `git@github.com:judebattista/ansible-sandbox.git`
+
+Alternatively you can clone the repo from Powershell:
+1. `cd c:/dev/ansible-sandbox`
+2. `git clone git@github.com:judebattista/ansible-sandbox.git`
+
 
 ## Set up Vagrantfile
 This repo contains a sample Vagrant file that stands up two Ubunta 22.04 boxes
