@@ -8,10 +8,10 @@ We have to jump through a few hoops to avoid nested virtualization issues: even 
 ## Windows (host) config:
 1. Make sure you’re on Windows Pro and enable Hyper-V (Control Panel → Turn Windows features on/off → Hyper-V).
 2. Create a virtual switch in Hyper-V using the following settings:
-		1. External network
-		2. Use your primary ethernet/wi-fi adapter
-		3. Check "allow management operating system to share this network adapter"
-		4. For compatibility with this repo, name the switch "ansibleSandbox". You can use any name you wish, but you'll need to edit the Vagrantfile later.
+	1. External network
+	2. Use your primary ethernet/wi-fi adapter
+	3. Check "allow management operating system to share this network adapter"
+	4. For compatibility with this repo, name the switch "ansibleSandbox". You can use any name you wish, but you'll need to edit the Vagrantfile later.
 
 Note: Open Windows Terminal as Administrator whenever you’ll run `vagrant up` with the Hyper-V provider as Hyper-V needs elevation.
 
@@ -22,9 +22,9 @@ Note: Open Windows Terminal as Administrator whenever you’ll run `vagrant up` 
 ## WSL: Install Vagrant (HashiCorp’s repo gives you a current version)
 1. Use a package manager: sudo apt install vagrant
 2. Install manually: 
-  	1. curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp.gpg
-  	2. echo "deb [signed-by=/usr/share/keyrings/hashicorp.gpg] https://apt.releases.hashicorp.com kali main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-  	3. update && sudo apt install -y vagrant
+	1. curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp.gpg
+	2. echo "deb [signed-by=/usr/share/keyrings/hashicorp.gpg] https://apt.releases.hashicorp.com kali main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+	3. update && sudo apt install -y vagrant
 
 ## WSL: Install Ansible. This example uses venv, but you can use whatever environment manager you choose.
 1. sudo apt install -y python3-venv python3-pip
@@ -39,6 +39,8 @@ This will allow us to use WSL to issue commands to Vagrant even though the VMs w
 If you would prefer to control your VMs through Powershell, you can omit this step.
 
 # Per-project set up
+## If you want to work with this repo as your base, clone the repo to your **Windows** file system.
+For continuity in this documentation, we will assume it is installed to C:/dev/ansible-sandbox
 
 ## Set up Vagrantfile
 This repo contains a sample Vagrant file that stands up two Ubunta 22.04 boxes
@@ -47,28 +49,17 @@ If you named your Hyper-V virtual switch something other than "ansibleSandbox" y
 
 ## Set up Ansible hosts file
 1. Bring up Vagrant and capture SSH config
-  	1. Open an elevated Windows Terminal to keep Hyper-V happy, then open your WSL tab
-  	2. cd to your repo in the Windows file systel: `cd /mnt/c/dev/ansible-lab`
-  	3. Start vagrant with: `vagrant up --provider=hyperv`
-  	4. Get the ssh info: `vagrant ssh-config > ssh.cfg`
+	1. Open an elevated Windows Terminal to keep Hyper-V happy, then open your WSL tab
+	2. cd to your repo in the Windows file system: `cd /mnt/c/dev/ansible-sandbox`
+	3. Start vagrant with: `vagrant up --provider=hyperv`
+	4. Get the ssh info: `vagrant ssh-config > ssh.cfg`
 
-4) Simple Ansible inventory that reuses ssh.cfg
-Create hosts.ini:
-	`[web]
-	web ansible\_host=web
-
-	[db]
-	db ansible\_host=db
-
-	[all:vars]
-	ansible\_user=vagrant
-	ansible\_password=vagrant
-	ansible\_ssh\_common\_args='-F ./ssh.cfg'`
-
+2. Simple Ansible inventory that reuses ssh.cfg
+Create hosts.ini or hosts.yaml. This repo contains a hosts.yaml file designed to work with the local Vagrantfile
 Test it:
 	`source ~/.venvs/ansble/bin/activate
 	ansible all -i hosts.ini -m ping`
 
-5) Run your playbook
+3. Run your playbook
 Assuming your playbook is site.yml and targets both hosts:
 	`ansible-playbook -i hosts.ini site.yml`
