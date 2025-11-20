@@ -4,6 +4,19 @@ The machines will be set up using Vagrant and Hyper-V in Windows.
 We will run all the commands to manage the VMs and Ansible in WSL.
 We have to jump through a few hoops to avoid nested virtualization issues: even though both Vagrant and Ansible will be controlled through the WSL command line interface, we will execute Vagrant in our Windows (host) environment so they run parallel to WSL's virtualization.
 
+# Prerequisites
+1. Ensure you have administrative rights on your machine. You will need both to configure your system and to execute some of the commands. 
+2. Ensure you have WSL installed on your system. You can check this with the following command:
+
+`wsl --status`
+
+For more information you can use:
+
+`wsl --version`
+
+For this guide, I used WSL 2 running on Windows 11, hosting both Kali and Ubuntu distributions. If you need to install WSL, [this article](https://learn.microsoft.com/en-us/windows/wsl/install) from Microsoft is helpful.
+
+
 # One-time setup
 ## Windows (host) config:
 1. Make sure you’re on Windows Pro and enable Hyper-V (Control Panel → Turn Windows features on/off → Hyper-V).
