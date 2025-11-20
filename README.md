@@ -16,7 +16,6 @@ For more information you can use:
 
 For this guide, I used WSL 2 running on Windows 11, hosting both Kali and Ubuntu distributions. If you need to install WSL, [this article](https://learn.microsoft.com/en-us/windows/wsl/install) from Microsoft is helpful.
 
-
 # One-time setup
 ## Windows (host) config:
 1. Make sure you’re on Windows Pro and enable Hyper-V (Control Panel → Turn Windows features on/off → Hyper-V).
@@ -33,11 +32,8 @@ Note: Open Windows Terminal as Administrator whenever you will run `vagrant up` 
 2. sudo apt install -y curl unzip ca-certificates build-essential
 
 ## WSL: Install Vagrant (HashiCorp’s repo gives you a current version)
-1. Use a package manager: sudo apt install vagrant
-2. Install manually: 
-	1. curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp.gpg
-	2. echo "deb [signed-by=/usr/share/keyrings/hashicorp.gpg] https://apt.releases.hashicorp.com kali main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-	3. update && sudo apt install -y vagrant
+1. Use your chosen distro's package manager. I used apt: `sudo apt install vagrant`
+2. Install manually using the instructions at [Hashicorp's site](https://developer.hashicorp.com/vagrant/install)
 
 ## WSL: Install Ansible. This example uses venv, but you can use whatever environment manager you choose.
 1. sudo apt install -y python3-venv python3-pip
