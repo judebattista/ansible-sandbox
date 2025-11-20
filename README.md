@@ -62,9 +62,10 @@ Alternatively you can clone the repo from Powershell:
 2. `git clone git@github.com:judebattista/ansible-sandbox.git`
 
 ## Set up Vagrantfile
-This repo contains a sample Vagrant file that stands up two Ubunta 22.04 boxes
-It uses the Hyper-V provider and the ansibleSandbox bridge we created during the Windows config
-If you named your Hyper-V virtual switch something other than "ansibleSandbox" you will need to esit the Vagrantfile (line 24 as of this version).
+This repo contains a sample Vagrant file that stands up two Ubuntu 22.04 boxes.
+It uses the Hyper-V provider and the ansibleSandbox bridge we created during the Windows config.
+If you named your Hyper-V virtual switch something other than "ansibleSandbox" you will need to edit the Vagrantfile (line 24 as of this version).
+
 ## Set up Ansible hosts file
 1. Bring up Vagrant and capture SSH config
 	1. Open an elevated Windows Terminal to keep Hyper-V happy, then open your WSL tab
