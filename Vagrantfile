@@ -21,7 +21,7 @@ Vagrant.configure("2") do |config|
       node.vm.hostname = "lab-#{name}"
 
       # Attach to our custom Hyper-V switch via public network
-      node.vm.network "public_network", bride: "ansibleSandbox", mac: "auto"
+      node.vm.network "public_network", bridge: "ansibleSandbox", mac: "auto"
 
       # Set up VM params
       node.vm.provider "hyperv" do |hv|
